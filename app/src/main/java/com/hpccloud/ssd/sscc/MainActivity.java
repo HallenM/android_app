@@ -1,6 +1,7 @@
 package com.hpccloud.ssd.sscc;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 // Подключения для Volley
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -38,24 +38,15 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "JSONSTR";
     public static final String APP_PREFERENCES = "Settings for local storage";
+    //public static boolean flag = false;
 
-    public void authorizedUser (View view) {
-        {   // Очистка значений
-            TextView textViewOld = findViewById(R.id.textView2);
-            textViewOld.setBackgroundResource(R.color.colorAccent);
-            textViewOld.setText("");
-            SharedPreferences localStorage = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = localStorage.edit();
-            editor.clear();
-        }
-
-        String url = "http://hpccloud.ssd.sscc.ru/api/1.0/tokens";
+    public void sendRequest(String url) {
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest requestForAuthorization = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 String token = null;
-                Integer id = 0;
+                int id = 0;
                 try {
                     JSONObject resultResp = new JSONObject(response);
                     JSONArray responseArr = resultResp.getJSONArray("tokens");
@@ -71,22 +62,26 @@ public class MainActivity extends AppCompatActivity {
                 editor.putInt("user_id", id);
                 editor.putString("token", token);
                 editor.apply();
+                //flag = true;
 
                 Log.d(TAG, "Response was sent successful. Data was obtained.");
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                TextView textView = findViewById(R.id.textView2);
-                textView.setBackgroundResource(R.color.inputErrorBackground);
-                textView.setText("wrong login or password");
+                SharedPreferences localStorage = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = localStorage.edit();
+                editor.putInt("user_id", 0);
+                editor.putString("token", "unknown");
+                editor.apply();
+                //flag = false;
                 Log.d(TAG, error.toString());
             }
         }) {
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                EditText data = (EditText) findViewById(R.id.editText);
+            public Map<String, String> getHeaders() {
+                EditText data = findViewById(R.id.editText);
                 String login = data.getText().toString();
-                data = (EditText) findViewById(R.id.editText2);
+                data = findViewById(R.id.editText2);
                 String password = data.getText().toString();
 
                 String credentials = login + ":" + password;
@@ -102,38 +97,55 @@ public class MainActivity extends AppCompatActivity {
         // Set the tag on the request.
         requestForAuthorization.setTag(TAG);
         queue.add(requestForAuthorization);
+        queue.start();
+    }
+
+    public void authorizedUser (View view) {
+        // Очистка значений
+        TextView textView = findViewById(R.id.textView2);
+        textView.setBackgroundResource(R.color.inputWhite);
+        textView.setText("");
+
+        /*SharedPreferences localStorage = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        localStorage.edit().remove("user_id").clear().apply();
+        localStorage.edit().remove("token").clear().apply();*/
+
+        String url = "http://hpccloud.ssd.sscc.ru/api/1.0/tokens";
+        sendRequest(url);
 
         SharedPreferences localStorage = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
-        Integer id = localStorage.getInt("user_id", 0);
+        int id = localStorage.getInt("user_id", 0);
         String token = localStorage.getString("token", "unknown");
-        String result = "token: " + token + " \n" + "id: " + id.toString();
+        //String result = "token: " + token + " \n" + "id: " + id.toString();
 
-        TextView textView = findViewById(R.id.textView2);
+        //TextView textView = findViewById(R.id.textView2);
         if (token.equals("unknown")) {
             textView.setBackgroundResource(R.color.inputErrorBackground);
+            //textView.setBackgroundResource(R.drawable.input_err_border);
             textView.setText("wrong login or password");
 
-            // Таймер обратного отсчёта на 6с с шагом в 1с (значения в мс):
-            new CountDownTimer(4000, 1000) {
+            // Таймер обратного отсчёта на 3с с шагом в 1с (значения в мс):
+            new CountDownTimer(3000, 1000) {
                 // Обновление счётчика обратного отсчета с каждой секундой
                 public void onTick(long millisUntilFinished) {
-                    //TextView textViewOld = findViewById(R.id.textView2);
-                    //textViewOld.setBackgroundResource(R.color.colorAccent);
-                    //textViewOld.setText("wrong login or password " + millisUntilFinished / 1000);
+                    TextView textViewOld = findViewById(R.id.textView2);
+                    //textViewOld.setBackgroundResource(R.color.inputWhite);
+                    textViewOld.setText("wrong login or password "); //+ millisUntilFinished / 1000);
                 }
 
                 // Действия после завершения отсчёта
                 public void onFinish() {
                     TextView textViewOld = findViewById(R.id.textView2);
-                    textViewOld.setBackgroundResource(R.color.colorAccent);
+                    textViewOld.setBackgroundResource(R.color.inputWhite);
                     textViewOld.setText("");
                 }
             }.start();
         }
         else {
             Toast.makeText(this, "Hello, user " + id, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, DashboardActivity.class);
+            startActivity(intent);
         }
-
         //textView.setText("Response done!  " + result);
     }
 
