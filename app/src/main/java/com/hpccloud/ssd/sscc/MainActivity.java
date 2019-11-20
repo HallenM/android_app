@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "JSONSTR";
     public static final String APP_PREFERENCES = "Settings for local storage";
+    private static String name = "";
     //public static boolean flag = false;
 
     public void sendRequest(String url) {
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
             public Map<String, String> getHeaders() {
                 EditText data = findViewById(R.id.editText);
                 String login = data.getText().toString();
+                name = login;
                 data = findViewById(R.id.editText2);
                 String password = data.getText().toString();
 
@@ -106,9 +108,6 @@ public class MainActivity extends AppCompatActivity {
         textView.setBackgroundResource(R.color.inputWhite);
         textView.setText("");
 
-        /*SharedPreferences localStorage = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
-        localStorage.edit().remove("user_id").clear().apply();
-        localStorage.edit().remove("token").clear().apply();*/
 
         String url = "http://hpccloud.ssd.sscc.ru/api/1.0/tokens";
         sendRequest(url);
@@ -120,8 +119,8 @@ public class MainActivity extends AppCompatActivity {
 
         //TextView textView = findViewById(R.id.textView2);
         if (token.equals("unknown")) {
-            textView.setBackgroundResource(R.color.inputErrorBackground);
-            //textView.setBackgroundResource(R.drawable.input_err_border);
+            //textView.setBackgroundResource(R.color.inputErrorBackground);
+            textView.setBackgroundResource(R.drawable.error_field);
             textView.setText("wrong login or password");
 
             // Таймер обратного отсчёта на 3с с шагом в 1с (значения в мс):
@@ -142,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
             }.start();
         }
         else {
-            Toast.makeText(this, "Hello, user " + id, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Hello, user: " + name, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, DashboardActivity.class);
             startActivity(intent);
         }
