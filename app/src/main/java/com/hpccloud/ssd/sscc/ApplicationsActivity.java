@@ -40,7 +40,7 @@ public class ApplicationsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_applications);
         SharedPreferences localStorage = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         final String token = localStorage.getString("token", "unknown").trim();
-        String url = "http://hpccloud.ssd.sscc.ru/api/1.0/projects";//?access_token="; //%1$s", token);
+        String url = "http://hpccloud.ssd.sscc.ru:4000/api/1.0/projects?access_token=" + token;
 
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest requestForApplications = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -72,34 +72,36 @@ public class ApplicationsActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     TextView debugText = findViewById(R.id.textView6);
-                    debugText.setText(e.toString());
+                    debugText.setText(e.getMessage());
+                    Log.e("ERROR VOLLEY", e.getMessage());
                 }
                 Log.d(TAG, "Response was sent successful. Data was obtained.");
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, error.toString());
+                Log.d(TAG, "!!!!! " + error.toString());
                 TextView debugText = findViewById(R.id.textView6);
                 debugText.setText(error.toString());
 
             }
-        }){
+        })/*{
             public Map<String, String> getHeaders() {
                 HashMap<String, String> headers = new HashMap<>();
                 headers.put("Authorization", "Bearer " + token);
                 return headers;
             }
-        };
-
-        /*{
-            public Map<String, String> getParams() {
-                HashMap<String, String> params = new HashMap<>();
-                //headers.put("Content-Type", "application/json; charset=UTF-8");
-                params.put("access_token", token);
-                return params;
-            }
         };*/
+
+//        {
+//            public Map<String, String> getParams() {
+//                HashMap<String, String> params = new HashMap<>();
+//                //headers.put("Content-Type", "application/json; charset=UTF-8");
+//                params.put("access_token", token);
+//                return params;
+//            }
+//        }
+        ;
 
         // Tag the request
         String TAG = "TagForCountProjectsRequest";
