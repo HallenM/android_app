@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
         textView.setText("");
 
 
-        String url = "http://hpccloud.ssd.sscc.ru/api/1.0/tokens";
+        String url = "http://hpccloud.ssd.sscc.ru:4000/api/1.0/tokens";
         sendRequest(url);
 
         SharedPreferences localStorage = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);

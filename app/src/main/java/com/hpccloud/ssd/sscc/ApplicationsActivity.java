@@ -26,6 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,22 +41,52 @@ public class ApplicationsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_applications);
         SharedPreferences localStorage = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         final String token = localStorage.getString("token", "unknown").trim();
-        String url = "http://hpccloud.ssd.sscc.ru/api/1.0/projects";//?access_token="; //%1$s", token);
+        String url = "http://hpccloud.ssd.sscc.ru:4000/api/1.0/projects?access_token=" + token;
 
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest requestForApplications = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                //JSONstr = response;
-                String names[];
+                JSONstr = response;
+                /*ArrayList<String> names = new ArrayList<String>();
+                ArrayList<String> types = new ArrayList<String>();
+                ArrayList<Integer> id = new ArrayList<Integer>();
+                try {
+                    JSONObject resultResp = new JSONObject(JSONstr);
+                    JSONArray responseArr = resultResp.getJSONArray("projects");
+                    for (int i = 0; i < responseArr.length(); i++) {
+                        JSONObject jsonValue = responseArr.getJSONObject(i);
+                        String str = jsonValue.getString("type");
+                        if(str.equals("app"))
+                        {
+                            names.set(i, jsonValue.getString("name"));
+                            types.set(i, str);
+                            id.set(i, jsonValue.getInt("id"));
+                        }
+                    }
+                    String str = "";
+                    for(int i = 0; i < names.size(); i++)
+                    {
+                        str += "name: " + names.get(i) + ", type: " + types.get(i) + ", id: " + id.get(i) + "; ";
+                    }
+                    TextView debugText = findViewById(R.id.textView6);
+                    debugText.setText("");
+                    debugText.setText("111: " + str);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    TextView debugText = findViewById(R.id.textView6);
+                    debugText.setText("!!!" + e.toString());
+                }*/
+
+                /*String names[];
                 String types[];
                 int id[];
                 try {
                     JSONObject resultResp = new JSONObject(response);
                     JSONArray responseArr = resultResp.getJSONArray("projects");
-                    names = new String[response.length()];
-                    types = new String[response.length()];
-                    id = new int[response.length()];
+                    names = new String[responseArr.length()];
+                    types = new String[responseArr.length()];
+                    id = new int[responseArr.length()];
                     for (int i = 0; i < responseArr.length(); i++) {
                         JSONObject jsonValue = responseArr.getJSONObject(i);
                         names[i] = jsonValue.getString("name");
@@ -65,7 +96,7 @@ public class ApplicationsActivity extends AppCompatActivity {
                     String str = "";
                     for(int i = 0; i < names.length; i++)
                     {
-                        str += names[i] + " " + types[i] + id[i] + "; ";
+                        str += "name: " + names[i] + ", type: " + types[i] + ", id: " + id[i] + "; ";
                     }
                     TextView debugText = findViewById(R.id.textView6);
                     debugText.setText("1: " + str);
@@ -73,33 +104,15 @@ public class ApplicationsActivity extends AppCompatActivity {
                     e.printStackTrace();
                     TextView debugText = findViewById(R.id.textView6);
                     debugText.setText(e.toString());
-                }
+                }*/
                 Log.d(TAG, "Response was sent successful. Data was obtained.");
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(TAG, error.toString());
-                TextView debugText = findViewById(R.id.textView6);
-                debugText.setText(error.toString());
-
             }
-        }){
-            public Map<String, String> getHeaders() {
-                HashMap<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + token);
-                return headers;
-            }
-        };
-
-        /*{
-            public Map<String, String> getParams() {
-                HashMap<String, String> params = new HashMap<>();
-                //headers.put("Content-Type", "application/json; charset=UTF-8");
-                params.put("access_token", token);
-                return params;
-            }
-        };*/
+        });
 
         // Tag the request
         String TAG = "TagForCountProjectsRequest";
@@ -108,28 +121,40 @@ public class ApplicationsActivity extends AppCompatActivity {
         queue.add(requestForApplications);
         queue.start();
 
-        /*String names[];
+        String names[], allNames[];
         String types[];
-        int id[];
+        int id[], allId[];
         try {
             JSONObject resultResp = new JSONObject(JSONstr);
             JSONArray responseArr = resultResp.getJSONArray("projects");
-            names = new String[resultResp.length()];
-            types = new String[resultResp.length()];
-            id = new int[resultResp.length()];
+            int count = 0;
+            types = new String[responseArr.length()];
             for (int i = 0; i < responseArr.length(); i++) {
                 JSONObject jsonValue = responseArr.getJSONObject(i);
-                names[i] = jsonValue.getString("name");
-                types[i] = jsonValue.getString("type");
-                id[i] = jsonValue.getInt("id");
+                types[i]= jsonValue.getString("type");
+                if(types[i].equals("app"))
+                {
+                    count++;
+                }
+            }
+            names = new String[count];
+            id = new int[count];
+            for (int i = 0, j = 0; i < responseArr.length() & j < count; i++) {
+                JSONObject jsonValue = responseArr.getJSONObject(i);
+                if(types[i].equals("app"))
+                {
+                    names[j] = jsonValue.getString("name");
+                    id[j] = jsonValue.getInt("id");
+                    j++;
+                }
             }
             String str = "";
             for(int i = 0; i < names.length; i++)
             {
-                str += names[i] + " " + types[i] + id[i] + "; ";
+                str += "name: " + names[i] + ", type: " + types[i] + ", id: " + id[i] + "; ";
             }
-            TextView debugText = findViewById(R.id.textView6);
-            debugText.setText("1: " + str);
+            //TextView debugText = findViewById(R.id.textView6);
+            //debugText.setText("111111: " + str);
 
             // Находим список
             ListView menuList = findViewById(R.id.lvMain);
@@ -140,7 +165,7 @@ public class ApplicationsActivity extends AppCompatActivity {
             // Создание адаптера
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, names);
             //Присваивание адаптера списку
-            menuList.setAdapter(adapter);*/
+            menuList.setAdapter(adapter);
 
             /*menuList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View view,
@@ -150,11 +175,11 @@ public class ApplicationsActivity extends AppCompatActivity {
                     //startActivity(intent);
                 }
             });*/
-        /*} catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
-            TextView debugText = findViewById(R.id.textView6);
-            debugText.setText(e.toString());
-        }*/
+            //TextView debugText = findViewById(R.id.textView6);
+            //debugText.setText(e.toString());
+        }
     }
 
     public static final String APP_PREFERENCES = "Settings for local storage";
