@@ -103,16 +103,47 @@ public class ApplicationsActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     TextView debugText = findViewById(R.id.textView6);
+<<<<<<< HEAD
                     debugText.setText(e.toString());
                 }*/
+=======
+                    debugText.setText(e.getMessage());
+                    Log.e("ERROR VOLLEY", e.getMessage());
+                }
+>>>>>>> d6d55e0bab11b03e0b4224b3f2526e3a86b0fa48
                 Log.d(TAG, "Response was sent successful. Data was obtained.");
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+<<<<<<< HEAD
                 Log.d(TAG, error.toString());
             }
         });
+=======
+                Log.d(TAG, "!!!!! " + error.toString());
+                TextView debugText = findViewById(R.id.textView6);
+                debugText.setText(error.toString());
+
+            }
+        })/*{
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };*/
+>>>>>>> d6d55e0bab11b03e0b4224b3f2526e3a86b0fa48
+
+//        {
+//            public Map<String, String> getParams() {
+//                HashMap<String, String> params = new HashMap<>();
+//                //headers.put("Content-Type", "application/json; charset=UTF-8");
+//                params.put("access_token", token);
+//                return params;
+//            }
+//        }
+        ;
 
         // Tag the request
         String TAG = "TagForCountProjectsRequest";
