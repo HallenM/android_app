@@ -39,7 +39,38 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "JSONSTR";
     public static final String APP_PREFERENCES = "Settings for local storage";
     private static String name = "";
-    //public static boolean flag = false;
+
+    public void isTokenCorrect (String token) {
+        TextView textView = findViewById(R.id.textView2);
+        textView.setBackgroundResource(R.color.inputWhite);
+        textView.setText("");
+
+        if (token.equals("unknown")) {
+            textView.setBackgroundResource(R.drawable.error_field);
+            textView.setText("wrong login or password");
+
+            // Таймер обратного отсчёта на 3с с шагом в 1с (значения в мс):
+            new CountDownTimer(3000, 1000) {
+                // Обновление счётчика обратного отсчета с каждой секундой
+                public void onTick(long millisUntilFinished) {
+                    TextView textViewOld = findViewById(R.id.textView2);
+                    textViewOld.setText("wrong login or password ");
+                }
+
+                // Действия после завершения отсчёта
+                public void onFinish() {
+                    TextView textViewOld = findViewById(R.id.textView2);
+                    textViewOld.setBackgroundResource(R.color.inputWhite);
+                    textViewOld.setText("");
+                }
+            }.start();
+        }
+        else {
+            Toast.makeText(this, "Hello, " + name, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, DashboardActivity.class);
+            startActivity(intent);
+        }
+    }
 
     public void sendRequest(String url) {
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -63,7 +94,8 @@ public class MainActivity extends AppCompatActivity {
                 editor.putInt("user_id", id);
                 editor.putString("token", token);
                 editor.apply();
-                //flag = true;
+
+                isTokenCorrect(token);
 
                 Log.d(TAG, "Response was sent successful. Data was obtained.");
             }
@@ -75,7 +107,9 @@ public class MainActivity extends AppCompatActivity {
                 editor.putInt("user_id", 0);
                 editor.putString("token", "unknown");
                 editor.apply();
-                //flag = false;
+
+                isTokenCorrect("unknown");
+
                 Log.d(TAG, error.toString());
             }
         }) {
@@ -95,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
         // Tag the request
-        String TAG = "TagForAuthorizationRequest";
+        String TAG = "Tag_for_authorization_request";
         // Set the tag on the request.
         requestForAuthorization.setTag(TAG);
         queue.add(requestForAuthorization);
@@ -108,45 +142,7 @@ public class MainActivity extends AppCompatActivity {
         textView.setBackgroundResource(R.color.inputWhite);
         textView.setText("");
 
-
         String url = "http://hpccloud.ssd.sscc.ru:4000/api/1.0/tokens";
         sendRequest(url);
-
-        SharedPreferences localStorage = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
-        int id = localStorage.getInt("user_id", 0);
-        String token = localStorage.getString("token", "unknown");
-        //String result = "token: " + token + " \n" + "id: " + id.toString();
-
-        //TextView textView = findViewById(R.id.textView2);
-        if (token.equals("unknown")) {
-            //textView.setBackgroundResource(R.color.inputErrorBackground);
-            textView.setBackgroundResource(R.drawable.error_field);
-            textView.setText("wrong login or password");
-
-            // Таймер обратного отсчёта на 3с с шагом в 1с (значения в мс):
-            new CountDownTimer(3000, 1000) {
-                // Обновление счётчика обратного отсчета с каждой секундой
-                public void onTick(long millisUntilFinished) {
-                    TextView textViewOld = findViewById(R.id.textView2);
-                    //textViewOld.setBackgroundResource(R.color.inputWhite);
-                    textViewOld.setText("wrong login or password "); //+ millisUntilFinished / 1000);
-                }
-
-                // Действия после завершения отсчёта
-                public void onFinish() {
-                    TextView textViewOld = findViewById(R.id.textView2);
-                    textViewOld.setBackgroundResource(R.color.inputWhite);
-                    textViewOld.setText("");
-                }
-            }.start();
-        }
-        else {
-            Toast.makeText(this, "Hello, user: " + name, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, DashboardActivity.class);
-            startActivity(intent);
-        }
-        //textView.setText("Response done!  " + result);
     }
-
-
 }

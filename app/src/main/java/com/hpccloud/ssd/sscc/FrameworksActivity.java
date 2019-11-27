@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 public class FrameworksActivity extends AppCompatActivity {
 
@@ -13,6 +15,16 @@ public class FrameworksActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frameworks);
+
+        String str[] = new String[1]; str[0] = "coming soon";
+        // Находим список
+        ListView menuList = findViewById(R.id.lvMain);
+        // Режим выбора пунктов списка (последний нажатый пункт)
+        menuList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        // Создание адаптера
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, str);
+        //Присваивание адаптера списку
+        menuList.setAdapter(adapter);
     }
 
     public static final String APP_PREFERENCES = "Settings for local storage";
