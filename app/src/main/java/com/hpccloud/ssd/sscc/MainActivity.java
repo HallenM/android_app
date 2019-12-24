@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         // Set the tag on the request.
         requestForAuthorization.setTag(TAG);
         queue.add(requestForAuthorization);
-        queue.start();
+        //queue.start();
     }
 
     public void authorizedUser (View view) {
@@ -142,7 +142,8 @@ public class MainActivity extends AppCompatActivity {
         textView.setBackgroundResource(R.color.inputWhite);
         textView.setText("");
 
-        String url = /*192.168.0.101*/"192.168.12.139:4000/api/1.0/tokens";
+        String url = /*192.168.0.101*/"http://192.168.12.139:4000/api/1.0/tokens";
+//        String url = "http://hpccloud.ssd.sscc.ru:4000/api/1.0/tokens";
         sendRequest(url);
     }
 }
