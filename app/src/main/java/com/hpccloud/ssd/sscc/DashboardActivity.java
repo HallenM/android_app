@@ -61,6 +61,7 @@ public class DashboardActivity extends AppCompatActivity {
             case 2: intent = new Intent(this, ModelsActivity.class);break;
             case 3: intent = new Intent(this, JobsActivity.class);break;
             case 4: intent = new Intent(this, ClustersActivity.class);break;
+            case 5: intent = new Intent(this, FileSystemActivity.class);break;
         }
         return intent;
     }

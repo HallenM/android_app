@@ -33,7 +33,7 @@ public class ModelsActivity extends AppCompatActivity {
 
         SharedPreferences localStorage = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         final String token = localStorage.getString("token", "unknown").trim();
-        String url = "http://hpccloud.ssd.sscc.ru:4000/api/1.0/projects?access_token=" + token;
+        String url = /*192.168.0.101*/"http://hpccloud.ssd.sscc.ru:4000/api/1.0/projects?access_token=" + token;
 
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest requestForApplications = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -84,13 +84,13 @@ public class ModelsActivity extends AppCompatActivity {
             }
 
             // Находим список
-            ListView menuList = findViewById(R.id.lvMain);
+            ListView modelsList = findViewById(R.id.lvMain);
             // Режим выбора пунктов списка (последний нажатый пункт)
-            menuList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+            modelsList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
             // Создание адаптера
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, names_models);
             //Присваивание адаптера списку
-            menuList.setAdapter(adapter);
+            modelsList.setAdapter(adapter);
         } catch (JSONException e) {
             e.printStackTrace();
             //TextView debugText = findViewById(R.id.textView6);

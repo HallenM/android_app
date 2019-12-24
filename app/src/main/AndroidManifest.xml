@@ -3,6 +3,8 @@
     package="com.hpccloud.ssd.sscc">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -11,12 +13,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".FileSystemActivity" />
         <activity android:name=".ClustersActivity"/>
         <activity android:name=".JobsActivity" />
         <activity android:name=".ModelsActivity" />
         <activity android:name=".FrameworksActivity" />
         <activity android:name=".ApplicationsActivity" />
         <activity android:name=".DashboardActivity" />
+        <activity android:name=".NewJobActivity" />
+        <activity android:name=".PerfomanseActivity" />
+        <activity android:name=".JobViewActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

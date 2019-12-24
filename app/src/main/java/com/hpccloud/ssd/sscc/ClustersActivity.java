@@ -35,7 +35,7 @@ public class ClustersActivity extends AppCompatActivity {
         final String token = localStorage.getString("token", "unknown").trim();
         final int user_id = localStorage.getInt("user_id", 0);
 
-        String url = "http://hpccloud.ssd.sscc.ru:4000/api/1.0/clusters/profiles?access_token=" + token;
+        String url = /*192.168.0.101*/"http://hpccloud.ssd.sscc.ru:4000/api/1.0/clusters/profiles?access_token=" + token;
 
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest requestForApplications = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -80,22 +80,15 @@ public class ClustersActivity extends AppCompatActivity {
                 names_clusters[i] = jsonValue.getString("name");
                 id_clusters[i] = jsonValue.getInt("id");
             }
-            /*String str = "";
-            for(int i = 0; i < names_clusters.length; i++)
-            {
-                str += "name: " + names_clusters[i] + ", id: " + id_clusters[i] + "; ";
-            }*/
-            //TextView debugText = findViewById(R.id.textView6);
-            //debugText.setText("111111: " + str);
 
             // Находим список
-            ListView menuList = findViewById(R.id.lvMain);
+            ListView clustersList = findViewById(R.id.lvMain);
             // Режим выбора пунктов списка (последний нажатый пункт)
-            menuList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+            clustersList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
             // Создание адаптера
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, names_clusters);
             //Присваивание адаптера списку
-            menuList.setAdapter(adapter);
+            clustersList.setAdapter(adapter);
         } catch (JSONException e) {
             e.printStackTrace();
             //TextView debugText = findViewById(R.id.textView6);

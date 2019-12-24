@@ -7,5 +7,6 @@
         <item>Models</item>
         <item>Jobs</item>
         <item>Clusters</item>
+        <item>File system</item>
     </string-array>
 </resources>

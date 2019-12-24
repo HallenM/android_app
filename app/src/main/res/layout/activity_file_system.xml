@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
-    tools:context=".JobsActivity">
+    tools:context=".FileSystemActivity">
 
     <View
         android:id="@+id/view4"
@@ -28,7 +28,6 @@
         android:id="@+id/button4"
         android:layout_width="236dp"
         android:layout_height="31dp"
-        android:layout_marginBottom="20dp"
         android:background="@drawable/button_border"
         android:onClick="showMenu"
         android:text="Menu"
@@ -36,35 +35,19 @@
         android:textSize="24sp"
         android:typeface="normal"
         app:fontFamily="@font/aclonica"
-        app:layout_constraintBottom_toTopOf="@+id/lvMain"
+        app:layout_constraintBottom_toBottomOf="@+id/view4"
         app:layout_constraintEnd_toEndOf="@+id/view4"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="@+id/view4"
         app:layout_constraintTop_toTopOf="@+id/view4"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <ListView
-        android:id="@+id/lvMain"
-        android:layout_width="243dp"
-        android:layout_height="273dp"
-        android:layout_marginTop="210dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/list_border"
-        android:divider="@drawable/button_border"
-        android:dividerHeight="1px"
-        android:gravity="center_horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
-        app:layout_constraintEnd_toEndOf="@+id/view4"
-        app:layout_constraintStart_toStartOf="@+id/view4"
-        app:layout_constraintTop_toTopOf="@+id/view4"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.286" />
 
     <TextView
         android:id="@+id/textView12"
         android:layout_width="236dp"
         android:layout_height="31dp"
         android:background="@drawable/button_border"
-        android:text="Jobs"
+        android:text="File System"
         android:textAlignment="center"
         android:textColor="@color/inputWhite"
         android:textSize="24sp"
@@ -75,22 +58,6 @@
         app:layout_constraintStart_toStartOf="@+id/view4"
         app:layout_constraintTop_toBottomOf="@+id/textView5"
         app:layout_constraintVertical_bias="0.414" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="118dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="480dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/button_border"
-        android:onClick="newJob"
-        android:text="New Job"
-        android:textColor="@color/inputWhite"
-        app:layout_constraintBottom_toBottomOf="@+id/view4"
-        app:layout_constraintEnd_toEndOf="@+id/view4"
-        app:layout_constraintStart_toStartOf="@+id/view4"
-        app:layout_constraintTop_toTopOf="@+id/view4"
-        app:layout_constraintVertical_bias="0.652" />
 
     <TextView
         android:id="@+id/textView5"
@@ -110,17 +77,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="43dp"
-        android:layout_height="47dp"
-        android:onClick="updateData"
-        app:layout_constraintBottom_toBottomOf="@+id/view4"
+    <ListView
+        android:id="@+id/lvMain"
+        android:layout_width="243dp"
+        android:layout_height="225dp"
+        android:layout_marginTop="210dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/list_border"
+        android:divider="@drawable/button_border"
+        android:dividerHeight="1px"
+        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toEndOf="@+id/view4"
-        app:layout_constraintHorizontal_bias="0.109"
         app:layout_constraintStart_toStartOf="@+id/view4"
         app:layout_constraintTop_toTopOf="@+id/view4"
-        app:layout_constraintVertical_bias="0.953"
-        app:srcCompat="@drawable/update_page" />
+        app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>

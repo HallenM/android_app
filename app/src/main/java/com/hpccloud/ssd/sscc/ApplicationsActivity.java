@@ -33,7 +33,7 @@ public class ApplicationsActivity extends AppCompatActivity {
 
         SharedPreferences localStorage = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         final String token = localStorage.getString("token", "unknown").trim();
-        String url = "http://hpccloud.ssd.sscc.ru:4000/api/1.0/projects?access_token=" + token;
+        String url = /*192.168.0.101*/"http://hpccloud.ssd.sscc.ru:4000/api/1.0/projects?access_token=" + token;
 
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest requestForApplications = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -84,13 +84,13 @@ public class ApplicationsActivity extends AppCompatActivity {
             }
 
             // Находим список
-            ListView menuList = findViewById(R.id.lvMain);
+            ListView appsList = findViewById(R.id.lvMain);
             // Режим выбора пунктов списка (последний нажатый пункт)
-            menuList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+            appsList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
             // Создание адаптера
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, names_apps);
             //Присваивание адаптера списку
-            menuList.setAdapter(adapter);
+            appsList.setAdapter(adapter);
         } catch (JSONException e) {
             e.printStackTrace();
             //TextView debugText = findViewById(R.id.textView6);
@@ -98,13 +98,8 @@ public class ApplicationsActivity extends AppCompatActivity {
         }
     }
 
-    public void logOut (View view) {
-        // Очистка данных
-        SharedPreferences localStorage = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
-        localStorage.edit().remove("user_id").clear().apply();
-        localStorage.edit().remove("token").clear().apply();
-
-        Intent intent = new Intent(this, MainActivity.class);
+    public void measurePerfomanse (View view) {
+        Intent intent = new Intent(this, PerfomanseActivity.class);
         startActivity(intent);
     }
 
