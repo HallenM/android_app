@@ -181,6 +181,7 @@ public class JobsActivity extends AppCompatActivity {
         public int getViewTypeCount() {
             return getCount();
         }
+
         @Override
         public int getItemViewType(int position) {
             return position;

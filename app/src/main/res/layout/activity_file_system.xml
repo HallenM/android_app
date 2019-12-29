@@ -9,8 +9,8 @@
 
     <View
         android:id="@+id/view4"
-        android:layout_width="325dp"
-        android:layout_height="582dp"
+        android:layout_width="371dp"
+        android:layout_height="650dp"
         android:layout_marginStart="31dp"
         android:layout_marginLeft="31dp"
         android:layout_marginTop="41dp"
@@ -37,10 +37,10 @@
         app:fontFamily="@font/aclonica"
         app:layout_constraintBottom_toBottomOf="@+id/view4"
         app:layout_constraintEnd_toEndOf="@+id/view4"
-        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="@+id/view4"
         app:layout_constraintTop_toTopOf="@+id/view4"
-        app:layout_constraintVertical_bias="0.286" />
+        app:layout_constraintVertical_bias="0.23" />
 
     <TextView
         android:id="@+id/textView12"
@@ -65,7 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="92dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:text="HPC Community Cloud"
@@ -74,14 +74,15 @@
         android:textSize="24sp"
         app:fontFamily="@font/aclonica"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
         android:id="@+id/lvMain"
-        android:layout_width="290dp"
-        android:layout_height="357dp"
-        android:layout_marginTop="210dp"
+        android:layout_width="316dp"
+        android:layout_height="358dp"
+        android:layout_marginTop="200dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/list_border"
         android:divider="@drawable/button_border"
@@ -89,8 +90,24 @@
         android:gravity="center_horizontal"
         app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toEndOf="@+id/view4"
+        app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="@+id/view4"
         app:layout_constraintTop_toTopOf="@+id/view4"
         app:layout_constraintVertical_bias="0.0" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="59dp"
+        android:layout_height="53dp"
+        android:background="#FFFFFF"
+        android:onClick="backFolder"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="@+id/view4"
+        app:layout_constraintEnd_toEndOf="@+id/view4"
+        app:layout_constraintHorizontal_bias="0.089"
+        app:layout_constraintStart_toStartOf="@+id/view4"
+        app:layout_constraintTop_toBottomOf="@+id/lvMain"
+        app:layout_constraintVertical_bias="0.333"
+        app:srcCompat="@drawable/arrow_back" />
 
 </android.support.constraint.ConstraintLayout>

@@ -173,7 +173,8 @@ public class PerformanceActivity extends AppCompatActivity {
         params.put("chunks",chunk);
 
         params.put("walltime", "00:10:00");
-        params.put("executable_path", "apps/" + name_apps[id_app] + "/builds/127.0.0.1/headnode/release");//"/builds/hpccloud.ssd.sscc.ru/headnode/release");
+        params.put("executable_path", "apps/" + name_apps[id_app] + "/builds/127.0.0.1/headnode/release");
+        //params.put("executable_path", "apps/" + name_apps[id_app] + "/builds/hpccloud.ssd.sscc.ru/headnode/release");
         params.put("args", "");
         params.put("env_vars", "");
         params.put("queue_name", "");

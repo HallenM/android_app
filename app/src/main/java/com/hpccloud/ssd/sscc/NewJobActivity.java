@@ -210,7 +210,7 @@ public class NewJobActivity extends AppCompatActivity {
         JSONObject params = new JSONObject();
         params.put("name", nameJob);
         params.put("type", "OpenPBS");
-        params.put("cluster_profile_id", 2);//parseInt(id_clusters[id_clu]));
+        params.put("cluster_profile_id", 3);//parseInt(id_clusters[id_clu]));
         params.put("state", "run");
 
         JSONArray chunk = new JSONArray();
@@ -234,7 +234,8 @@ public class NewJobActivity extends AppCompatActivity {
         params.put("chunks",chunk);
 
         params.put("walltime", "00:10:00");
-        params.put("executable_path", "apps/" + name_apps[id_app] + "/builds/hpccloud.ssd.sscc.ru/headnode/release");
+        params.put("executable_path", "apps/" + name_apps[id_app] + "/builds/127.0.0.1/headnode/release");
+        //params.put("executable_path", "apps/" + name_apps[id_app] + "/builds/hpccloud.ssd.sscc.ru/headnode/release");
         params.put("args", "");
         params.put("env_vars", "");
         params.put("queue_name", "");
@@ -288,7 +289,7 @@ public class NewJobActivity extends AppCompatActivity {
         String nameJob = data.getText().toString();
 
         Toast.makeText(this, "The job " + nameJob + " is running", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, DashboardActivity.class);
+        Intent intent = new Intent(this, JobsActivity.class);
         startActivity(intent);
     }
 }
