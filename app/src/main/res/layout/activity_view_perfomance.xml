@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
-    tools:context=".FileSystemActivity">
+    tools:context=".ViewPerfomanceActivity">
 
     <View
         android:id="@+id/view4"
-        android:layout_width="325dp"
-        android:layout_height="582dp"
+        android:layout_width="346dp"
+        android:layout_height="628dp"
         android:layout_marginStart="31dp"
         android:layout_marginLeft="31dp"
         android:layout_marginTop="41dp"
@@ -24,10 +25,23 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.224" />
 
+    <TextView
+        android:id="@+id/textViewInfoView"
+        android:layout_width="315dp"
+        android:layout_height="109dp"
+        android:textColor="@color/textColorHint"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/view4"
+        app:layout_constraintEnd_toEndOf="@+id/view4"
+        app:layout_constraintStart_toStartOf="@+id/view4"
+        app:layout_constraintTop_toBottomOf="@+id/textView14"
+        app:layout_constraintVertical_bias="0.029" />
+
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/button5"
         android:layout_width="236dp"
         android:layout_height="31dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/button_border"
         android:onClick="showMenu"
         android:text="Menu"
@@ -37,27 +51,25 @@
         app:fontFamily="@font/aclonica"
         app:layout_constraintBottom_toBottomOf="@+id/view4"
         app:layout_constraintEnd_toEndOf="@+id/view4"
-        app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="@+id/view4"
         app:layout_constraintTop_toTopOf="@+id/view4"
-        app:layout_constraintVertical_bias="0.286" />
+        app:layout_constraintVertical_bias="0.979" />
 
     <TextView
-        android:id="@+id/textView12"
-        android:layout_width="236dp"
-        android:layout_height="31dp"
+        android:id="@+id/textView14"
+        android:layout_width="268dp"
+        android:layout_height="44dp"
         android:background="@drawable/button_border"
-        android:text="File System"
+        android:text="Result of measuring application performance"
         android:textAlignment="center"
         android:textColor="@color/inputWhite"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:fontFamily="@font/aclonica"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
+        app:layout_constraintBottom_toBottomOf="@+id/view4"
         app:layout_constraintEnd_toEndOf="@+id/view4"
-        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="@+id/view4"
         app:layout_constraintTop_toBottomOf="@+id/textView5"
-        app:layout_constraintVertical_bias="0.414" />
+        app:layout_constraintVertical_bias="0.026" />
 
     <TextView
         android:id="@+id/textView5"
@@ -65,7 +77,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="76dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:text="HPC Community Cloud"
@@ -73,24 +85,24 @@
         android:textColor="@color/colorHPC"
         android:textSize="24sp"
         app:fontFamily="@font/aclonica"
+        app:layout_constraintBottom_toBottomOf="@+id/view4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ListView
-        android:id="@+id/lvMain"
-        android:layout_width="290dp"
-        android:layout_height="357dp"
-        android:layout_marginTop="210dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/list_border"
-        android:divider="@drawable/button_border"
-        android:dividerHeight="1px"
-        android:gravity="center_horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
-        app:layout_constraintEnd_toEndOf="@+id/view4"
-        app:layout_constraintStart_toStartOf="@+id/view4"
-        app:layout_constraintTop_toTopOf="@+id/view4"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+
+    <de.codecrafters.tableview.TableView
+        android:id="@+id/tableView"
+        android:layout_width="319dp"
+        android:layout_height="280dp"
+        android:divider="@color/textColorHint"
+        android:dividerHeight="1dip"
+        app:layout_constraintBottom_toBottomOf="@+id/view4"
+        app:layout_constraintEnd_toEndOf="@+id/view4"
+        app:layout_constraintHorizontal_bias="0.518"
+        app:layout_constraintStart_toStartOf="@+id/view4"
+        app:layout_constraintTop_toBottomOf="@+id/textViewInfoView"
+        app:layout_constraintVertical_bias="0.118"
+        app:tableView_headerElevation="4" />
 
 </android.support.constraint.ConstraintLayout>

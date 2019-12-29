@@ -33,7 +33,8 @@ public class ModelsActivity extends AppCompatActivity {
 
         SharedPreferences localStorage = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         final String token = localStorage.getString("token", "unknown").trim();
-        String url = /*192.168.0.101*/"http://hpccloud.ssd.sscc.ru:4000/api/1.0/projects?access_token=" + token;
+        String url = "http://192.168.0.108:4000/api/1.0/projects?access_token=" + token;
+        //String url = "http://hpccloud.ssd.sscc.ru:4000/api/1.0/projects?access_token=" + token;
 
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest requestForApplications = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {

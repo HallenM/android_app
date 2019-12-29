@@ -35,7 +35,8 @@ public class ClustersActivity extends AppCompatActivity {
         final String token = localStorage.getString("token", "unknown").trim();
         final int user_id = localStorage.getInt("user_id", 0);
 
-        String url = /*192.168.0.101*/"http://hpccloud.ssd.sscc.ru:4000/api/1.0/clusters/profiles?access_token=" + token;
+        String url = "http://192.168.0.108:4000/api/1.0/clusters/profiles?access_token=" + token;
+        //String url = "http://hpccloud.ssd.sscc.ru:4000/api/1.0/clusters/profiles?access_token=" + token;
 
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest requestForApplications = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {

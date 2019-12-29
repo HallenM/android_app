@@ -31,14 +31,16 @@ import org.json.JSONObject;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import static java.lang.Integer.parseInt;
+
 public class NewJobActivity extends AppCompatActivity {
 
     public static final String APP_PREFERENCES = "Settings for local storage";
     private static final String TAG = "JSONSTR_NEW_JOB";
 
     private String token = null;
-    private String[] name_apps;
-    int id_app;
+    private String[] name_apps, name_clusters, id_clusters;
+    int id_app, id_clu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +51,23 @@ public class NewJobActivity extends AppCompatActivity {
         token = localStorage.getString("token", "unknown").trim();
 
         getAppsName();
+        //getClustersName();
 
         Set<String> local;
         local = localStorage.getStringSet("names_apps", new LinkedHashSet<String>());
-        name_apps = local.toArray(new String[local.size()]);;
+        name_apps = local.toArray(new String[local.size()]);
+
+        /*local.clear();
+        local = localStorage.getStringSet("names_clusters", new LinkedHashSet<String>());
+        name_clusters = local.toArray(new String[local.size()]);
+        local.clear();
+        local = localStorage.getStringSet("id_clusters", new LinkedHashSet<String>());
+        id_clusters = local.toArray(new String[local.size()]);
+        SharedPreferences.Editor editor = localStorage.edit();
+        editor.remove("names_apps");
+        editor.remove("names_clusters");
+        editor.remove("id_clusters");
+        editor.apply();*/
 
         // адаптер
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, name_apps);
@@ -67,18 +82,36 @@ public class NewJobActivity extends AppCompatActivity {
         // устанавливаем обработчик нажатия
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int position, long id) {
-                id_app = position;
-            }
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                id_app = position; }
             @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-            }
+            public void onNothingSelected(AdapterView<?> arg0) {  }
         });
+
+        /*adapter.clear();
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, name_clusters);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        Spinner spinnerClu = findViewById(R.id.spinner2);
+        spinnerClu.setAdapter(adapter);
+        // заголовок
+        spinnerClu.setPrompt("Clusters");
+        // выделяем элемент
+        spinnerClu.setSelection(0);
+        // устанавливаем обработчик нажатия
+        spinnerClu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                id_clu = position; }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {  }
+        });*/
+
     }
 
     public void getAppsName(){
-        String url = /*192.168.0.101*/"http://hpccloud.ssd.sscc.ru:4000/api/1.0/projects?access_token=" + token;
+        String url = "http://192.168.0.108:4000/api/1.0/projects?access_token=" + token;
+        //String url = "http://hpccloud.ssd.sscc.ru:4000/api/1.0/projects?access_token=" + token;
 
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest requestForApplications = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -120,6 +153,52 @@ public class NewJobActivity extends AppCompatActivity {
         queue.start();
     }
 
+    public void getClustersName() {
+        String url = "http://192.168.0.108:4000/api/1.0/clusters/profiles?access_token=" + token;
+        //String url = "http://hpccloud.ssd.sscc.ru:4000/api/1.0/clusters/profiles?access_token=" + token;
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest requestForApplications = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Set <String> names_clu = new LinkedHashSet<>();
+                Set <String> id_clu = new LinkedHashSet<>();
+                try {
+                    JSONObject resultResp = new JSONObject(response);
+                    JSONArray responseArr = resultResp.getJSONArray("clusters_profiles");
+                    for (int i = 0; i < responseArr.length(); i++) {
+                        JSONObject jsonValue = responseArr.getJSONObject(i);
+                        names_clu.add(jsonValue.getString("name"));
+                        Integer id = jsonValue.getInt("id");
+                        id_clu.add(id.toString());
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.d("!11111111", e.getMessage());
+                }
+
+                SharedPreferences localStorage = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = localStorage.edit();
+                editor.putStringSet("names_clusters", names_clu);
+                editor.putStringSet("id_clusters", id_clu);
+                editor.apply();
+                Log.d(TAG, "Response was sent successful. Name and id clu was obtained.");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("ERROR!!!!!!", error.toString());
+            }
+        });
+
+        // Tag the request
+        String TAG = "Tag_for_count_of_clusters_request";
+        // Set the tag on the request.
+        requestForApplications.setTag(TAG);
+        queue.add(requestForApplications);
+        //queue.start();
+    }
+
     public JSONObject setParams() throws JSONException {
         EditText data = findViewById(R.id.editTextNodes);
         String nodes = data.getText().toString();
@@ -131,7 +210,7 @@ public class NewJobActivity extends AppCompatActivity {
         JSONObject params = new JSONObject();
         params.put("name", nameJob);
         params.put("type", "OpenPBS");
-        params.put("cluster_profile_id", 14);
+        params.put("cluster_profile_id", 2);//parseInt(id_clusters[id_clu]));
         params.put("state", "run");
 
         JSONArray chunk = new JSONArray();
@@ -165,8 +244,7 @@ public class NewJobActivity extends AppCompatActivity {
 
     public void sendRequest(String url) throws JSONException {
 
-        JSONObject parameters = new JSONObject();
-        parameters = setParams();
+        JSONObject parameters = setParams();
 
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest requestForNewJob = new JsonObjectRequest(Request.Method.POST, url, parameters, new Response.Listener<JSONObject>() {
@@ -202,7 +280,8 @@ public class NewJobActivity extends AppCompatActivity {
     }
 
     public void startJob (View view) throws JSONException {
-        String url = /*192.168.0.101*/"http://hpccloud.ssd.sscc.ru:4000/api/1.0/jobs?access_token=" + token;
+        String url = "http://192.168.0.108:4000/api/1.0/jobs?access_token=" + token;
+        //String url = "http://hpccloud.ssd.sscc.ru:4000/api/1.0/jobs?access_token=" + token;
         sendRequest(url);
 
         EditText data = findViewById(R.id.editTextName);

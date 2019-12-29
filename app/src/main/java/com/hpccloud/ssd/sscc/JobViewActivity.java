@@ -1,14 +1,11 @@
 package com.hpccloud.ssd.sscc;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -18,12 +15,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Collections;
-import java.util.Comparator;
 
 public class JobViewActivity extends AppCompatActivity {
 
@@ -43,7 +36,8 @@ public class JobViewActivity extends AppCompatActivity {
         TextView debugText = findViewById(R.id.textView14);
         debugText.setText(name_jobs);
 
-        String url = /*192.168.0.101*/"http://hpccloud.ssd.sscc.ru:4000/api/1.0/fs/jobs/" + name_jobs + "/" + id_jobs + ".out?access_token=" + token;
+        String url = "http://192.168.0.108:4000/api/1.0/fs/jobs/" + name_jobs + "/" + id_jobs + ".out?access_token=" + token;
+        //String url = "http://hpccloud.ssd.sscc.ru:4000/api/1.0/fs/jobs/" + name_jobs + "/" + id_jobs + ".out?access_token=" + token;
         getJobResult(url);
     }
 
@@ -57,12 +51,18 @@ public class JobViewActivity extends AppCompatActivity {
                     JSONObject subObj = new JSONObject(resultResp.getString("file"));
                     String result = subObj.getString("body");
 
-                    TextView viewText = findViewById(R.id.textView10);
+                    TextView viewText = findViewById(R.id.textViewInfoView);
+                    viewText.setMovementMethod(new ScrollingMovementMethod());
                     viewText.setText(result);
 
+                    SharedPreferences localStorage = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = localStorage.edit();
+                    editor.remove("job_id");
+                    editor.remove("job_name");
+                    editor.apply();
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    TextView viewText = findViewById(R.id.textView10);
+                    TextView viewText = findViewById(R.id.textViewInfoView);
                     viewText.setText(e.toString());
                 }
                 Log.d(TAG, "Response was sent successful. Data was obtained.");

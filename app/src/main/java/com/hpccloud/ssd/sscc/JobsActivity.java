@@ -70,7 +70,8 @@ public class JobsActivity extends AppCompatActivity {
         SharedPreferences localStorage = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         final String token = localStorage.getString("token", "unknown").trim();
 
-        String url = /*192.168.0.101*/"http://hpccloud.ssd.sscc.ru:4000/api/1.0/jobs?access_token=" + token;
+        String url = "http://192.168.0.108:4000/api/1.0/jobs?access_token=" + token;
+        //String url = "http://hpccloud.ssd.sscc.ru:4000/api/1.0/jobs?access_token=" + token;
 
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest requestForApplications = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -132,15 +133,16 @@ public class JobsActivity extends AppCompatActivity {
             ListView jobList = null;
             jobList = findViewById(R.id.lvMain);
             jobList.setAdapter(null);
-            // Режим выбора пунктов списка (последний нажатый пункт)
-            jobList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-            // Создание адаптера
-            JobsAdapter adapter = new JobsAdapter(this,jobsModelArrayList);
 
-            //Присваивание адаптера списку
-            jobList.setAdapter(adapter);
+            if(responseArr.length()!= 0) {
+                // Режим выбора пунктов списка (последний нажатый пункт)
+                jobList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+                // Создание адаптера
+                JobsAdapter adapter = new JobsAdapter(this, jobsModelArrayList);
 
-
+                //Присваивание адаптера списку
+                jobList.setAdapter(adapter);
+            }
 
             // добвляем для списка слушатель
             jobList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -161,8 +163,7 @@ public class JobsActivity extends AppCompatActivity {
 
         } catch (JSONException e) {
             e.printStackTrace();
-            //TextView debugText = findViewById(R.id.textView6);
-            //debugText.setText(e.toString());
+            Log.d("JSONERROR!!!", e.getMessage());
         }
     }
 

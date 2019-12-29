@@ -22,8 +22,9 @@
         <activity android:name=".ApplicationsActivity" />
         <activity android:name=".DashboardActivity" />
         <activity android:name=".NewJobActivity" />
-        <activity android:name=".PerfomanseActivity" />
         <activity android:name=".JobViewActivity" />
+        <activity android:name=".PerfomanceActivity" />
+        <activity android:name=".ViewPerfomanceActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
