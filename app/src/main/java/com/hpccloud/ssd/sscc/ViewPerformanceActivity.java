@@ -17,14 +17,14 @@ import de.codecrafters.tableview.TableView;
 import de.codecrafters.tableview.toolkit.SimpleTableDataAdapter;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 
-public class ViewPerfomanceActivity extends AppCompatActivity {
+public class ViewPerformanceActivity extends AppCompatActivity {
 
     public static final String APP_PREFERENCES = "Settings for local storage";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_perfomance);
+        setContentView(R.layout.activity_view_performance);
 
         TextView info = findViewById(R.id.textViewInfoView);
         info.setMovementMethod(new ScrollingMovementMethod());

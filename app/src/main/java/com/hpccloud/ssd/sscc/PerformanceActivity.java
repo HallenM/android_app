@@ -37,7 +37,7 @@ import java.util.Set;
 
 import static java.lang.Integer.parseInt;
 
-public class PerfomanceActivity extends AppCompatActivity {
+public class PerformanceActivity extends AppCompatActivity {
 
     public static final String APP_PREFERENCES = "Settings for local storage";
     private static final String TAG = "JSONSTR_PERFOMANSE";
@@ -49,7 +49,7 @@ public class PerfomanceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_perfomance);
+        setContentView(R.layout.activity_performance);
 
         Button b = findViewById(R.id.button6);
         b.setClickable(false);
@@ -395,7 +395,7 @@ public class PerfomanceActivity extends AppCompatActivity {
     }
 
     public void seeResult (View view) {
-        Intent intent = new Intent(this, ViewPerfomanceActivity.class);
+        Intent intent = new Intent(this, ViewPerformanceActivity.class);
         startActivity(intent);
     }
 }

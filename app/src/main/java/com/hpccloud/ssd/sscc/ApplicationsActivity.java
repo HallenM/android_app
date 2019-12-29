@@ -100,7 +100,7 @@ public class ApplicationsActivity extends AppCompatActivity {
     }
 
     public void measurePerfomanse (View view) {
-        Intent intent = new Intent(this, PerfomanceActivity.class);
+        Intent intent = new Intent(this, PerformanceActivity.class);
         startActivity(intent);
     }
 
