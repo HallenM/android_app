@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0066AA</color>
+    <color name="colorPrimaryDark">#00426B</color>
+    <color name="colorAccent">#EEEEF2</color>
+    <color name="inputWhite">#FFFFFF</color>
+    <color name="inputErrorBackground">#97F58B8B</color>
+    <color name="inputErrorBorder">#00F58B8B</color>
+    <color name="colorButton">#0066AA</color>
+    <color name="colorHPC">#5F5F5F</color>
+    <color name="inputErrorText">#E42828</color>
+    <!-- цвета для inputLayout -->
+    <color name="textColorHint">#000000</color>
+    <!-- поле неактивно, цвет строки -->
+    <color name="colorControlNormal">#0066AA</color>
+    <!-- поле активно, цвет подсказки и самой строки-->
+    <color name="colorControlActivated">#0066AA</color>
+</resources>

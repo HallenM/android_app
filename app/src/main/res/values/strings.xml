@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">hpc2c</string>
+
+    <string-array name="names">
+        <item>Applications</item>
+        <item>Frameworks</item>
+        <item>Models</item>
+        <item>Jobs</item>
+        <item>Clusters</item>
+        <item>File system</item>
+    </string-array>
+</resources>
